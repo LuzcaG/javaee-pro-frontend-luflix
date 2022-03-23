@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Cadastro de Adimistrador</title>
+</head>
+<style>
+	body{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background: linear-gradient(4000deg,rgb(243, 150, 150),rgb(238, 238, 238));
+    text-align: center;
+    color: white;
+}
+.container{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 50%;
+  height: 400px;
+  background-color: rgb(0, 0, 0,0.6);
+  border-radius: 10px;
+  padding: 1em;
+  padding-bottom: 40px;
+}
+button{
+    background-color: rgba(137, 43, 226, 0);
+    color: white;
+    border: none;
+    padding: 1em;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 1px 1px 6px black;
+    text-shadow: 1px 1px 6px black;
+    
+}
+button:hover{
+    background-color: rgb(138, 138, 255);
+    
+    
+}
+.second-step{
+    display: none;
+}
+input{
+    padding: 2px;
+    border-radius: 5px;
+    border:1px solid white;
+    background-color:transparent;
+    outline: none;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+}
+.final-step{
+    display:none;
+}
+table{
+        padding-left: 350px;
+}
+
+</style>
+<body>
+	<div class="divPrincipal">
+                <div class="container">
+                        <form method="post" action="salvarAdministrador">
+                                <h1>Cadastro de Administrador</h1>
+                                <table>
+                                        <tr>
+                                                <td>Nome:</td>
+                                                <br>
+                                                <td><input type="text" name="nome"></td>
+                                        </tr>
+                                        <tr>
+                                                <td>Email:</td>
+                                                <td><input type="email" name="email"></td>
+                                        </tr>
+                                        <tr>
+                                                <td>Senha:</td>
+                                                <td><input type="password" name="senha"></td>
+                                        </tr>
+                                        <tr>
+                                                <td><button type="submit">Cadastrar</button></td>
+                                        </tr>
+                                </table>
+                        </form>
+                       <div th:replace="error/fragments/mensagem">
+                       </div>
+		
+		</div>
+		
+	</div>
+</body>
+</html>
