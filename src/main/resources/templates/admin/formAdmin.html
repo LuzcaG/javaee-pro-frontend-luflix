@@ -7,7 +7,7 @@
 <style>
 	body{
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    background: linear-gradient(4000deg,rgb(243, 150, 150),rgb(238, 238, 238));
+    background: linear-gradient(40deg,rgb(243, 150, 150),rgb(238, 238, 238));
     text-align: center;
     color: white;
 }
@@ -68,7 +68,6 @@ table{
                                 <table>
                                         <tr>
                                                 <td>Nome:</td>
-                                                <br>
                                                 <td><input type="text" name="nome"></td>
                                         </tr>
                                         <tr>
@@ -84,7 +83,7 @@ table{
                                         </tr>
                                 </table>
                         </form>
-                       <div th:replace="error/fragments/mensagem">
+                       <div class="erro" th:replace="error/fragments/mensagem">
                        </div>
 		
 		</div>

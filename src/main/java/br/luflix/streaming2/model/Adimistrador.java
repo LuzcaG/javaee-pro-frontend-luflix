@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+import br.luflix.streaming2.util.HashUtil;
 import lombok.Data;
 //para gerar como uma entiadade JPA
 
@@ -25,4 +26,10 @@ public class Adimistrador {
 	private String email;
 	@NotEmpty
 	private String senha;
+	
+	//meodo para setar a senha aplicando hash  
+	public void setSenha(String senha) {
+		//
+		this.senha = HashUtil.hash256(senha); 
+	}
 }

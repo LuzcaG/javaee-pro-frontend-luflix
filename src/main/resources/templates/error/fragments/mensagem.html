@@ -4,8 +4,19 @@
 <meta charset="utf-8">
 <title></title>
 </head>
-
+<style>
+	.alertErro{
+		background: red;
+		color: white;
+	}
+	.alertSucesso{
+		background: green;
+		color: white;
+	}
+</style>
 <body>
+	<br>
+	<br>
 	<div class="alertErro"
 		 th:if="${not #strings.isEmpty(mensagemErro)}">
 			<span th:text="${mensagemErro}"></span>
