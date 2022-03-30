@@ -2,8 +2,11 @@
 <html xmlns:th="http://thymeleaf.org">
 <head>
 <meta charset="utf-8">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"><!-- Compiled and minified JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<!-- Compiled and minified JavaScript -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <title>Cadastro de Adimistrador</title>
 </head>
 <style>
@@ -16,13 +19,13 @@ body {
 	color: white;
 }
 
-.containerAdmin {
+.containerFilmes {
 	position: absolute;
 	top: 40%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	width: 50%;
-	height: 500px;
+	height: 550px;
 	background-color: black;
 	border-radius: 10px;
 	padding: 1em;
@@ -57,7 +60,8 @@ input {
 	border-left: none;
 	border-top: none;
 	border-right: none;
-	
+	color: white;
+	font-size: 5px;
 }
 
 .final-step {
@@ -68,43 +72,66 @@ table {
 	width: 100%;
 }
 
-.fromAdmin{
- width: 100%;
- height: 100%
+.fromFilmes {
+	width: 100%;
+	height: 100%
 }
+
 footer {
-position: fixed;
-bottom:0;
-left:0;
-width:100%;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+}
+.sinopse{
+	color: white;
+	resize: none;
+	height: 100px;
 }
 </style>
 <body>
-
-		<header th:replace="padrao/padrao :: cabecalho"></header>
+	<!-- pontos para por  no body 
+			private Long id;
+			@NotEmpty
+			private String nome;
+			@NotEmpty
+			private String genero;
+			@NotEmpty
+			private String sinopse; 
+			@NotEmpty
+			private String palavraChave;
+			@NotEmpty
+			private String DataDeLancamento;
+			@NotEmpty
+			private String Diretor;
+				
 		
-	
+		-->
+	<header th:replace="padrao/padrao :: cabecalho"></header>
+
+
 	<input type="hidden" th:value="${adm?.id}" name="id">
 
 
 	<div class="divPrincipal">
-		<div class="containerAdmin">
-			<form method="post" action="salvarAdministrador" class="fromAdmin">
+		<div class="containerFilmes">
+			<form method="post" class="fromFilmes">
 				<h1>Cadastro de Administrador</h1>
 				<table>
 					<tr>
 						<td>Nome:</td>
-						<td><input type="text" name="nome" th:value="${admin?.nome}" style="font-size: 30px"></td>
+						<td><input type="text" name="nome" th:value="${admin?.nome}"
+							style="font-size: 30px"></td>
 					</tr>
 					<tr>
-						<td>Email:</td>
-						<td><input type="email" name="email"
-							th:value="${admin?.email}" style="font-size: 30px" ></td>
+						<td>Genêro:</td>
+						<td><input type="text" name="genero"
+							th:value="${admin?.email}" style="font-size: 30px"></td>
+						
 					</tr>
 					<tr>
-						<td>Senha:</td>
-						<td><input type="password" name="senha"
-							th:value="${admin?.senha}" style="font-size: 30px"></td>
+						<td>sinopse:</td>
+						<td><textarea rows="1" cols="10" wrap="hard" class="sinopse"></textarea></td>
 					</tr>
 					<tr>
 						<td><button type="submit">Cadastrar</button></td>
@@ -117,6 +144,6 @@ width:100%;
 		<div class="divfooter"></div>
 		<footer th:replace="padrao/padrao :: rodape"></footer>
 	</div>
-	
+
 </body>
 </html>

@@ -1,13 +1,11 @@
 package br.luflix.streaming2.controller;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -23,21 +21,19 @@ import br.luflix.streaming2.model.Adimistrador;
 import br.luflix.streaming2.repository.AdminRepository;
 import br.luflix.streaming2.util.HashUtil;
 
-
 @Controller
-public class luflixController {
-
+public class filmesControlller {
 	@Autowired
 	private AdminRepository admRep;
 
-	@RequestMapping("formAdmin")
-	public String formCli() {
+	@RequestMapping("formFilmes")
+	public String formFilmes() {
 
-		return "admin/formAdmin";
+		return "admin/formFilmes";
 
 	}
 
-	@RequestMapping(value = "salvarAdministrador", method = RequestMethod.POST)
+	/*@RequestMapping(value = "salvarAdministrador", method = RequestMethod.POST)
 	public String salvarAdmin(@Valid Adimistrador admin, BindingResult result, RedirectAttributes attr) {
 
 		try {
@@ -100,5 +96,5 @@ public class luflixController {
 		Adimistrador admin = admRep.findById(id).get();
 		mod.addAttribute("admin", admin);
 		return "forward:formAdmin";
-	}
+	}*/
 }

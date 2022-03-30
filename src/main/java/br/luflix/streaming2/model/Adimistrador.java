@@ -32,4 +32,7 @@ public class Adimistrador {
 		//
 		this.senha = HashUtil.hash256(senha); 
 	}
+	public void setSenhaComHash(String hash) {
+		this.senha = hash;
+	}
 }
