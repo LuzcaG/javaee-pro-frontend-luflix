@@ -7,14 +7,13 @@
 <!-- Compiled and minified JavaScript -->
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<title>Cadastro de Filmes</title>
+<title>Lista de Gêneros</title>
 </head>
 <style>
 body {
 	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
 		'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-	background: linear-gradient(98deg, red,
-		rgb(238, 238, 238));
+	background: linear-gradient(98deg, red, black);
 	text-align: center;
 	color: white;
 }
@@ -26,7 +25,6 @@ body {
 	transform: translate(-50%, -50%);
 	width: 50%;
 	height: 750px;
-	
 	border-radius: 10px;
 	padding: 1em;
 	padding-bottom: 40px;
@@ -96,7 +94,6 @@ footer {
 	display: flex;
 	background-color: transparent;
 	border: none;
-	
 }
 
 .tdbutton {
@@ -110,73 +107,62 @@ footer {
 .tdata {
 	padding-left: 0%;
 }
-.labSinopse{
+
+.labSinopse {
 	float: left;
 	padding-left: 5px;
 	font-size: 15px;
 	color: white;
 }
-.tituloForm{
+
+.tituloForm {
 	color: black;
-	text-shadow: 9px 9px 9px rgb(0,0,0,0.5);
+	text-shadow: 9px 9px 9px rgb(0, 0, 0, 0.5);
 }
 </style>
 <body>
-	<!-- pontos para por  no body 
-			private Long id;
-			@NotEmpty
-			private String nome;
-			@NotEmpty
-			private String genero;
-			@NotEmpty
-			private String sinopse; 
-			@NotEmpty
-			private String palavraChave;
-			@NotEmpty
-			private String DataDeLancamento;
-			@NotEmpty
-			private String Diretor;
-				
-		
-		-->
+	
 	<header th:replace="padrao/padrao :: cabecalho"></header>
+	
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>NOME</th>
+				<th>DESCRIÇÃO</th>
+				<th>PALAVRA CHAVE</th>
+				<th>ALTERAR</th>
+				<th>EXCLUIR</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!-- th:href="@{/alterarAdmin(id=${adm.id})}" -->
+			<tr th:each="gn: ${gens}">
+				<td th:text=${gn.id}></td>
+				<td th:text=${gn.nome}></td>
+				<td th:text=${gn.descricao}></td>
+				<td th:text=${gn.palavraChave}></td>
+				<td><a th:href="@{/alterarGen(id=${gn.id})}"><button>alterar</button></a></td>
+				<td><a th:href="@{/excluirGen(id=${gn.id})}"><button>excluir</button></a></td>
+			</tr>
 
-
-	<input type="hidden" th:value="${adm?.id}" name="id">
+		</tbody>
+	</table>
+	<div class="divPags">
+		<ul class="pagination">
+			<li class="disabled" th:class="${paginaAtual == 1 ? 'disabled' : ''}">
+				<a th:href="${paginaAtual > 1 ? paginaAtual - 1 : '#' }"><</a>
+			</li>
+			<li th:each="p:${numPaginas}"><a th:href="${p}"><span
+					th:text="${p}"></span></a></li>
+			<li class="waves-effect"
+				th:class="${paginaAtual == totalPagina ? 'disabled' : ''}"><a
+				th:href="${paginaAtual > totalPagina ? paginaAtual +1 : '#'}">></a></li>
+		</ul>
+	</div>
 
 
 	<div class="divPrincipal">
-		<div class="containerFilmes">
-			<form method="post" class="fromFilmes">
-				<h1 class="tituloForm">CADASTRO DE FILMES</h1>
-				<table>
-					<tr>
-						<td>Nome:</td>
-						<td><input type="text" name="nome" th:value="${admin?.nome}"
-							style="font-size: 30px"></td>
-						<td>Data de lançamento:</td>
-						<td class="tdata"><input type="date"></td>
-					</tr>
-					<tr>
-						<td>Genêro:</td>
-						<td><select name="selectGen" id="genSelect"><option
-									value=""></option></select></td>
-						<td>Diretor:</td>
-						<td class="tdiretor"><input type="text"></td>
-
-					</tr>
-				</table>
-				<label class="labSinopse">Sinopse:</label> 
-				<div><textarea rows="1" cols="10" wrap="hard" class="sinopse"></textarea></div>
-				
-				<div class="tdbutton">
-					<button type="submit">Cadastrar</button>
-				</div>
-			</form>
-			<div class="erro" th:replace="error/fragments/mensagem"></div>
-
-		</div>
-		<div class="divfooter"></div>
 		<footer th:replace="padrao/padrao :: rodape"></footer>
 	</div>
 

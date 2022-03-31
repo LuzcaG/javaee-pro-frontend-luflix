@@ -142,41 +142,12 @@ footer {
 	<header th:replace="padrao/padrao :: cabecalho"></header>
 
 
-	<input type="hidden" th:value="${adm?.id}" name="id">
+	<input type="hidden"  name="id">
 
 
 	<div class="divPrincipal">
-		<div class="containerFilmes">
-			<form method="post" class="fromFilmes">
-				<h1 class="tituloForm">CADASTRO DE FILMES</h1>
-				<table>
-					<tr>
-						<td>Nome:</td>
-						<td><input type="text" name="nome" th:value="${admin?.nome}"
-							style="font-size: 30px"></td>
-						<td>Data de lançamento:</td>
-						<td class="tdata"><input type="date"></td>
-					</tr>
-					<tr>
-						<td>Genêro:</td>
-						<td><select name="selectGen" id="genSelect"><option
-									value=""></option></select></td>
-						<td>Diretor:</td>
-						<td class="tdiretor"><input type="text"></td>
-
-					</tr>
-				</table>
-				<label class="labSinopse">Sinopse:</label> 
-				<div><textarea rows="1" cols="10" wrap="hard" class="sinopse"></textarea></div>
-				
-				<div class="tdbutton">
-					<button type="submit">Cadastrar</button>
-				</div>
-			</form>
-			<div class="erro" th:replace="error/fragments/mensagem"></div>
-
-		</div>
-		<div class="divfooter"></div>
+	
+		
 		<footer th:replace="padrao/padrao :: rodape"></footer>
 	</div>
 
