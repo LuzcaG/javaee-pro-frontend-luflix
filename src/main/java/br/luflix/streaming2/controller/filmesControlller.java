@@ -17,48 +17,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.luflix.streaming2.model.Adimistrador;
+import br.luflix.streaming2.model.TipodeFilmes;
 import br.luflix.streaming2.repository.AdminRepository;
+import br.luflix.streaming2.repository.FilmesRepository;
+import br.luflix.streaming2.repository.GenerosRepository;
 import br.luflix.streaming2.util.HashUtil;
 
 @Controller
 public class filmesControlller {
 	@Autowired
-	private AdminRepository admRep;
+	private FilmesRepository filmRep;
+	@Autowired
+	private GenerosRepository genrep;
 
 	@RequestMapping("formFilmes")
-	public String formFilmes() {
-
+	public String formFilmes(Model model) {
+		
+		model.addAttribute("TipodeGenero", genrep.findAll());
 		return "admin/formFilmes";
 
 	}
 
-	/*@RequestMapping(value = "salvarAdministrador", method = RequestMethod.POST)
-	public String salvarAdmin(@Valid Adimistrador admin, BindingResult result, RedirectAttributes attr) {
+	@RequestMapping(value = "salvarFilm", method = RequestMethod.POST)
+	public String salvarfilmes(@Valid TipodeFilmes film, BindingResult result, RedirectAttributes attr) {
 
 		try {
-			admRep.save(admin);
-			attr.addFlashAttribute("mensagemSucesso", "Administrador cadastrado com sucesso. nome: " + admin.getNome());
+			filmRep.save(film);
+			attr.addFlashAttribute("mensagemSucesso", "Filme cadastrado com sucesso. nome: " + film.getNome());
 		} catch (Exception e) {
 			attr.addFlashAttribute("mensagemErro",
-					"Houve um erro ao cadastrar o Adiminstrador: os campos não pode estar Vazio.");
+					"Houve um erro ao cadastrar o filme: os campos não pode estar Vazio.");
 
 		}
 
-		boolean alteracao = admin.getId() != null ? true : false;
-		if (admin.getSenha().equals(HashUtil.hash256(""))) {
-			if (!alteracao) {
-				String parte = admin.getEmail().substring(0, admin.getEmail().indexOf("@"));
-			} else {
-				String senha = admRep.findById(admin.getId()).get().getSenha();
-				admin.setSenhaComHash(senha);
-			}
-		}
 
-		return "redirect:formAdmin";
-		// verifica se esta sendo feita uma alteração ao invés de uma inserção
+		return "redirect:formFilmes";
 
 	}
+	
+	/*
 
 	// request mapping para listar, informando a página desejada
 	@RequestMapping("listarAdmin/{pagina}")

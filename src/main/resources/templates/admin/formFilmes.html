@@ -13,20 +13,18 @@
 body {
 	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
 		'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-	background: linear-gradient(98deg, red,
-		rgb(238, 238, 238));
+	background: linear-gradient(98deg, red, rgb(238, 238, 238));
 	text-align: center;
 	color: white;
 }
 
 .containerFilmes {
 	position: absolute;
-	top: 55%;
+	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	width: 50%;
 	height: 750px;
-	
 	border-radius: 10px;
 	padding: 1em;
 	padding-bottom: 40px;
@@ -74,7 +72,7 @@ table {
 
 .fromFilmes {
 	width: 100%;
-	height: 100%
+	height: 80%
 }
 
 footer {
@@ -96,10 +94,10 @@ footer {
 	display: flex;
 	background-color: transparent;
 	border: none;
-	
 }
 
 .tdbutton {
+	padding-top: 10px;
 	padding-left: 5px;
 }
 
@@ -110,15 +108,25 @@ footer {
 .tdata {
 	padding-left: 0%;
 }
-.labSinopse{
+
+.labSinopse {
 	float: left;
 	padding-left: 5px;
 	font-size: 15px;
 	color: white;
+	padding-bottom: 10px;
 }
-.tituloForm{
+
+.tituloForm {
 	color: black;
-	text-shadow: 9px 9px 9px rgb(0,0,0,0.5);
+	text-shadow: 9px 9px 9px rgb(0, 0, 0, 0.5);
+}
+.tdFoto{
+	width: 50%;
+}
+
+.infoto{
+	background-color: fuchsia;
 }
 </style>
 <body>
@@ -147,7 +155,7 @@ footer {
 
 	<div class="divPrincipal">
 		<div class="containerFilmes">
-			<form method="post" class="fromFilmes">
+			<form method="post" class="fromFilmes" action="salvarFilm">
 				<h1 class="tituloForm">CADASTRO DE FILMES</h1>
 				<table>
 					<tr>
@@ -159,16 +167,28 @@ footer {
 					</tr>
 					<tr>
 						<td>Genêro:</td>
-						<td><select name="selectGen" id="genSelect"><option
-									value=""></option></select></td>
+						<!-- <select name="cliente.id" style="width: 220px">
+							<option th:each="c: ${clientes}" th:text="${c.nome}" th:value="${c.id}"></option>
+							</select> -->
+
+						<td><select name="tpGen.id" id="genSelect">
+								<option th:each="tg: ${TipodeGenero}" th:text=${tg.nome} th:value="${tg.id}"></option>
+						</select></td>
 						<td>Diretor:</td>
 						<td class="tdiretor"><input type="text"></td>
 
 					</tr>
+					
+					<tr>
+						<td>Foto do filme:</td>
+						<td class="tdFoto"><input type="file" style="font-size: 20px;border: none;" class="inFoto"></td>
+					</tr>
 				</table>
-				<label class="labSinopse">Sinopse:</label> 
-				<div><textarea rows="1" cols="10" wrap="hard" class="sinopse"></textarea></div>
-				
+				<label class="labSinopse">Sinopse:</label>
+				<div>
+					<textarea rows="1" cols="10" wrap="hard" class="sinopse"></textarea>
+				</div>
+
 				<div class="tdbutton">
 					<button type="submit">Cadastrar</button>
 				</div>

@@ -80,7 +80,7 @@ footer {
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	height: 100px
+	height: 10%;
 }
 
 .sinopse {
@@ -119,11 +119,51 @@ footer {
 	color: black;
 	text-shadow: 9px 9px 9px rgb(0, 0, 0, 0.5);
 }
+.divPaginas{
+	padding-top: 1%;
+
+}
+.h1Busca{
+	font-size: 20px;
+	float: left;
+}
+.pBusca{
+	font-size: 10px;
+	float: left;
+	padding-left: 10PX;
+}
+.buscaIn{
+  width: 20pz;
+}
+.aButton{
+	float: left;
+}
 </style>
 <body>
 	
 	<header th:replace="padrao/padrao :: cabecalho"></header>
+	<h1 class="h1Busca">Buscar genero:</h1>
 	
+	<form action="/buscarChave">
+		<input type="search" name="palavraChave"
+							style="font-size: 30px" class="buscaIn">
+		<a class="aButton"><button type="submit">BUSCAR</button></a>
+	</form>
+	<p class="pBusca">busque pela palavra chave do genêro</p>
+	<div class="divPaginas">
+	<div class="divPags">
+		<ul class="pagination">
+			<li   th:class="${paginaAtual == 1 ? 'disabled' : ''}">
+				<a th:href="${paginaAtual > 1 ? paginaAtual - 1 : '#' }"><</a>
+			</li>
+			<li th:each="p:${numPaginas}"><a th:href="${p}"><span th:text="${p}"></span></a></li>
+			<li  th:class="${paginaAtual == totalPaginas ? 'disabled' : ''}"><a th:href="${paginaAtual < totalPaginas ? paginaAtual + 1 : '#'}" >></a></li>
+		</ul>
+	</div>
+	
+	
+	</div>
+	<br>
 	<table>
 		<thead>
 			<tr>
@@ -148,23 +188,12 @@ footer {
 
 		</tbody>
 	</table>
-	<div class="divPags">
-		<ul class="pagination">
-			<li class="disabled" th:class="${paginaAtual == 1 ? 'disabled' : ''}">
-				<a th:href="${paginaAtual > 1 ? paginaAtual - 1 : '#' }"><</a>
-			</li>
-			<li th:each="p:${numPaginas}"><a th:href="${p}"><span
-					th:text="${p}"></span></a></li>
-			<li class="waves-effect"
-				th:class="${paginaAtual == totalPagina ? 'disabled' : ''}"><a
-				th:href="${paginaAtual > totalPagina ? paginaAtual +1 : '#'}">></a></li>
-		</ul>
-	</div>
+	
+	
 
 
-	<div class="divPrincipal">
+	
 		<footer th:replace="padrao/padrao :: rodape"></footer>
-	</div>
-
+	
 </body>
 </html>

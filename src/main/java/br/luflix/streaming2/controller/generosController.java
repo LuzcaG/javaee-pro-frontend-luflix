@@ -96,4 +96,9 @@ public class generosController {
 		mod.addAttribute("genero", gen);
 		return "forward:formGenero";
 	}
+	@RequestMapping("buscarChave")
+	public String buscarPalavra(Model model, String palavraChave) {
+	model.addAttribute("generos", genRepository.verGenero(palavraChave));
+	return "admin/listaGen";
+	}
 }

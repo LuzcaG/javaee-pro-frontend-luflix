@@ -13,12 +13,25 @@ footer {
 	width: 100%;
 	height: 100px
 }
+.divErro{
+	padding-left: 400px;
+}
 </style>
 <body>
 <header th:replace="padrao/padraoError404 :: cabecalho"></header>
+<div class="divErro">
 <h1>error 404</h1>
-<p></p>
-<footer th:replace="padrao/padrao :: rodape"></footer>
+<p>HTTP Status 404 – Não Encontrado</p>
+<p>Type Status Report</p>
+
+<p>Mensagem: O recurso solicitado [/helloWORDLDspring/] não está disponível</p>
+
+<p>Descrição: O servidor de origem não encontrou uma representação atual para o recurso de destino ou não deseja divulgar que existe.</p>
+
+<p>luflix.studio.br/2.0456wd</p>
+</div>
+
+<footer th:replace="padrao/padraoError404 :: rodape"></footer>
 
 </body>
 </html>

@@ -1,9 +1,11 @@
 package br.luflix.streaming2.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 
 import lombok.Data;
@@ -16,8 +18,8 @@ public class TipodeFilmes {
 	private Long id;
 	@NotEmpty
 	private String nome;
-	@NotEmpty
-	private String genero;
+	@ManyToOne
+	private TipodeGenero genero;
 	@NotEmpty
 	private String sinopse; 
 	@NotEmpty
@@ -26,5 +28,8 @@ public class TipodeFilmes {
 	private String DataDeLancamento;
 	@NotEmpty
 	private String Diretor;
+	
+	@Column(columnDefinition = "TEXT")
+	private String Fotos;
 	
 }

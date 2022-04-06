@@ -141,10 +141,39 @@ footer {
 		-->
 	<header th:replace="padrao/padrao :: cabecalho"></header>
 
+<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>NOME</th>
+				<th>DESCRIÇÃO</th>
+				<th>PALAVRA CHAVE</th>
+				<th>ALTERAR</th>
+				<th>EXCLUIR</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!-- th:href="@{/alterarAdmin(id=${adm.id})}" -->
+			<tr th:each="gn: ${gens}">
+				<td th:text=${gn.id}></td>
+				<td th:text=${gn.nome}></td>
+				<td th:text=${gn.descricao}></td>
+				<td th:text=${gn.palavraChave}></td>
+				<td><a th:href="@{/alterarGen(id=${gn.id})}"><button>alterar</button></a></td>
+				<td><a th:href="@{/excluirGen(id=${gn.id})}"><button>excluir</button></a></td>
+			</tr>
 
-	<input type="hidden"  name="id">
-
-
+		</tbody>
+	</table>
+	<div class="divPags">
+		<ul class="pagination">
+			<li   th:class="${paginaAtual == 1 ? 'disabled' : ''}">
+				<a th:href="${paginaAtual > 1 ? paginaAtual - 1 : '#' }"><</a>
+			</li>
+			<li th:each="p:${numPaginas}"><a th:href="${p}"><span th:text="${p}"></span></a></li>
+			<li  th:class="${paginaAtual == totalPaginas ? 'disabled' : ''}"><a th:href="${paginaAtual < totalPaginas ? paginaAtual + 1 : '#'}" >></a></li>
+		</ul>
+	</div>
 	<div class="divPrincipal">
 	
 		
