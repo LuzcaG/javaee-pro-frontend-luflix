@@ -121,12 +121,17 @@ footer {
 	color: black;
 	text-shadow: 9px 9px 9px rgb(0, 0, 0, 0.5);
 }
-.tdFoto{
+
+.tdFoto {
 	width: 50%;
 }
 
-.infoto{
+.infoto {
 	background-color: fuchsia;
+}
+.btn{
+	background: linear-gradient(98deg, rgb(0,0,0,0.6),rgb(0,0,0,0.2));
+	border-radius: 10px;
 }
 </style>
 <body>
@@ -155,15 +160,14 @@ footer {
 
 	<div class="divPrincipal">
 		<div class="containerFilmes">
-			<form method="post" class="fromFilmes" action="salvarFilm">
+			<form method="post" class="fromFilmes" action="salvarFilm" enctype="multipart/form-data" accept-charset="utf-8">
 				<h1 class="tituloForm">CADASTRO DE FILMES</h1>
 				<table>
 					<tr>
 						<td>Nome:</td>
-						<td><input type="text" name="nome" th:value="${admin?.nome}"
-							style="font-size: 30px"></td>
+						<td><input type="text" name="nome" style="font-size: 30px"></td>
 						<td>Data de lançamento:</td>
-						<td class="tdata"><input type="date"></td>
+						<td class="tdata"><input type="date" name="dataDeLancamento"></td>
 					</tr>
 					<tr>
 						<td>Genêro:</td>
@@ -171,22 +175,38 @@ footer {
 							<option th:each="c: ${clientes}" th:text="${c.nome}" th:value="${c.id}"></option>
 							</select> -->
 
-						<td><select name="tpGen.id" id="genSelect">
-								<option th:each="tg: ${TipodeGenero}" th:text=${tg.nome} th:value="${tg.id}"></option>
+						<td><select name="genero.id" id="genSelect">
+								<option th:each="tg: ${TipodeGenero}" th:text=${tg.nome}
+									th:value="${tg.id}"></option>
 						</select></td>
 						<td>Diretor:</td>
-						<td class="tdiretor"><input type="text"></td>
+						<td class="tdiretor"><input type="text" name="diretor"></td>
 
 					</tr>
-					
+
 					<tr>
 						<td>Foto do filme:</td>
-						<td class="tdFoto"><input type="file" style="font-size: 20px;border: none;" class="inFoto"></td>
+						<td class="tdFoto">
+
+							<form action="salvarFilm">
+								<div class="file-field input-field">
+									<div class="btn">
+										<span>Escolha o arquivo</span> <input type="file" name="fileFotos" multiple accept="image/*">
+									</div>
+									<div class="file-path-wrapper">
+										<input class="file-path validate" type="text">
+									</div>
+								</div>
+							</form>
+
+
+						</td>
 					</tr>
 				</table>
 				<label class="labSinopse">Sinopse:</label>
 				<div>
-					<textarea rows="1" cols="10" wrap="hard" class="sinopse"></textarea>
+					<textarea rows="1" cols="10" wrap="hard" class="sino"
+						name="sinopse"></textarea>
 				</div>
 
 				<div class="tdbutton">

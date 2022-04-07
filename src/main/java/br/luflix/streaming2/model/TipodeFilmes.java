@@ -16,20 +16,20 @@ public class TipodeFilmes {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotEmpty
+	//@NotEmpty
 	private String nome;
 	@ManyToOne
 	private TipodeGenero genero;
-	@NotEmpty
+	//@NotEmpty
 	private String sinopse; 
-	@NotEmpty
+	
 	private String palavraChave;
-	@NotEmpty
-	private String DataDeLancamento;
-	@NotEmpty
-	private String Diretor;
+	//@NotEmpty
+	private String dataDeLancamento;
+	//@NotEmpty
+	private String diretor;
 	
 	@Column(columnDefinition = "TEXT")
-	private String Fotos;
+	private String fotos;
 	
 }

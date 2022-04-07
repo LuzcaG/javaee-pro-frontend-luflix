@@ -98,7 +98,7 @@ public class generosController {
 	}
 	@RequestMapping("buscarChave")
 	public String buscarPalavra(Model model, String palavraChave) {
-	model.addAttribute("generos", genRepository.verGenero(palavraChave));
+	model.addAttribute("gens", genRepository.verGenero(palavraChave));
 	return "admin/listaGen";
 	}
 }
