@@ -1,8 +1,10 @@
 package br.luflix.streaming2.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.RepaintManager;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.luflix.streaming2.model.TipodeFilmes;
+import br.luflix.streaming2.model.TipodeGenero;
 import br.luflix.streaming2.repository.AdminRepository;
 import br.luflix.streaming2.repository.FilmesRepository;
 import br.luflix.streaming2.repository.GenerosRepository;
+import br.luflix.streaming2.util.FireBaseUtil;
 import br.luflix.streaming2.util.HashUtil;
 
 @Controller
@@ -31,7 +35,8 @@ public class filmesControlller {
 	private FilmesRepository filmRep;
 	@Autowired
 	private GenerosRepository genrep;
-
+    @Autowired
+	private FireBaseUtil firebase;
 	@RequestMapping("formFilmes")
 	public String formFilmes(Model model) {
 
@@ -40,51 +45,86 @@ public class filmesControlller {
 
 	}
 
-	@RequestMapping(value = "salvarFilm", method = RequestMethod.POST)
-	public String salvarfilmes(@Valid TipodeFilmes film, BindingResult result,
-			 RedirectAttributes attr,@RequestParam("fileFotos") MultipartFile[] fileFotos) {
-			System.out.println(fileFotos.length);
-		//try {
-			//filmRep.save(film);
-			//attr.addFlashAttribute("mensagemSucesso", "Filme cadastrado com sucesso. nome: " + film.getNome());
-		//} catch (Exception e) {
-			//attr.addFlashAttribute("mensagemErro",
-					//"Houve um erro ao cadastrar o filme: os campos não pode estar Vazio.");
-
-		//}
-
+	@RequestMapping("salvarFilm")
+	public String salvarfilmes(TipodeFilmes film, @RequestParam("fileFotos") MultipartFile[] fileFotos) {
+		String fotos = film.getFotos();
+		
+		System.out.println(fileFotos.length);
+		for (MultipartFile arquivo : fileFotos) {
+			// verirficar se o arquivo esta vazio
+			if (arquivo.getOriginalFilename().isEmpty()) {
+				// vai para o proximo arquivo
+				continue;
+			}
+			//faz o upload para a nuvem e obtem a url gerada
+			try {
+				fotos += firebase.uploadFile(arquivo)+":";
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
+		
+		film.setFotos(fotos);
+		filmRep.save(film);
 		return "redirect:formFilmes";
-
+		
 	}
+	@RequestMapping("listarFilmes/{pagina}")
+	public String listar(Model model, @PathVariable("pagina") int page) {
 
-	/*
-	 * 
-	 * // request mapping para listar, informando a página desejada
-	 * 
-	 * @RequestMapping("listarAdmin/{pagina}") public String listar(Model
-	 * model, @PathVariable("pagina") int page) {
-	 * 
-	 * // criarr uma pageable ordenando com umero determinado por pagina, os objetos
-	 * // pelo nome,de forma ascendente PageRequest pageable = PageRequest.of(page -
-	 * 1, 6, Sort.by(Sort.Direction.ASC, "nome")); // cria a pagiana atual através
-	 * do repository Page<Adimistrador> pagina = admRep.findAll(pageable);
-	 * 
-	 * int totalPages = pagina.getTotalPages();
-	 * 
-	 * List<Integer> pageNumbers = new ArrayList<Integer>(); for (int i = 0; i <
-	 * totalPages; i++) { pageNumbers.add(i + 1); } // adiciona as variaveis na
-	 * Model model.addAttribute("admins", pagina.getContent());
-	 * model.addAttribute("paginaAtual", page); model.addAttribute("totalPaginas",
-	 * totalPages); model.addAttribute("numPaginas", pageNumbers); return
-	 * "admin/listaAdmin"; }
-	 * 
-	 * @RequestMapping("excluirAdmin") public String excluirAdmin(Long id) {
-	 * admRep.deleteById(id); return "redirect:listarAdmin/1"; }
-	 * 
-	 * @RequestMapping("alterarAdmin") public String alterarAdmin(Model mod, Long
-	 * id) {
-	 * 
-	 * Adimistrador admin = admRep.findById(id).get(); mod.addAttribute("admin",
-	 * admin); return "forward:formAdmin"; }
-	 */
+		// criarr uma pageable ordenando com umero determinado por pagina, os objetos
+		// pelo nome,de forma ascendente
+		PageRequest pageable = PageRequest.of(page - 1, 6, Sort.by(Sort.Direction.ASC, "nome"));
+		// cria a pagiana atual através do repository
+		Page<TipodeFilmes> pagina = filmRep.findAll(pageable);
+
+		int totalPages = pagina.getTotalPages();
+
+		List<Integer> pageNumbers = new ArrayList<Integer>();
+		for (int i = 0; i < totalPages; i++) {
+			pageNumbers.add(i + 1);
+		}
+		// adiciona as variaveis na Model
+		model.addAttribute("films", pagina.getContent());
+		model.addAttribute("paginaAtual", page);
+		model.addAttribute("totalPaginas", totalPages);
+		model.addAttribute("numPaginas", pageNumbers);
+		return "admin/listaFilmes";
+	}
+	@RequestMapping("alterarFilm")
+	public String alterarFilm(Model mod, Long id) {
+		TipodeFilmes film = filmRep.findById(id).get();
+		mod.addAttribute("film", film);
+		return "forward:formFilmes";
+	}
+	@RequestMapping("excluirFilm")
+	public String excluirFilm(Long id) {
+		TipodeFilmes film = filmRep.findById(id).get();
+		if (film.getFotos().length() > 0) {
+			for(String foto : film.verFotos()) {
+				firebase.deletar(foto);
+			}
+		} 
+		filmRep.delete(film);
+		return "redirect:listarFilmes/1";
+	}
+	@RequestMapping("excluirFotoFilm")
+	public String excluirFoto(Long id, int numFoto,Model model) {
+		TipodeFilmes tpfilmes = filmRep.findById(id).get();
+		
+		String fotoUrl = tpfilmes.verFotos()[numFoto];
+		firebase.deletar(fotoUrl);
+		
+		tpfilmes.setFotos(tpfilmes.getFotos().replace(fotoUrl+";", ""));
+		
+		filmRep.save(tpfilmes);
+		
+		model.addAttribute("film", tpfilmes);
+		
+		return "forward:formFilmes";
+		
+	}
+	public void alterarFoto() {
+		
+	}
 }

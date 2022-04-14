@@ -1,14 +1,11 @@
 package br.luflix.streaming2.controller;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -20,26 +17,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.luflix.streaming2.annotation.Publico;
 import br.luflix.streaming2.model.Adimistrador;
 import br.luflix.streaming2.repository.AdminRepository;
 import br.luflix.streaming2.util.HashUtil;
 
-
 @Controller
-public class luflixController {
+public class indexcontroller {
+	//@Autowired
+	//private AdminRepository admRep;
 
-	@Autowired
-	private AdminRepository admRep;
+	
+	public String formLogin() {
 
-	@RequestMapping("formAdmin")
-	public String formCli() {
-
-		return "admin/formAdmin";
+		return "index";
 
 	}
 
-	@RequestMapping(value = "salvarAdministrador", method = RequestMethod.POST)
+	/*@RequestMapping(value = "salvarAdministrador", method = RequestMethod.POST)
 	public String salvarAdmin(@Valid Adimistrador admin, BindingResult result, RedirectAttributes attr) {
 
 		try {
@@ -64,10 +58,10 @@ public class luflixController {
 		return "redirect:formAdmin";
 		// verifica se esta sendo feita uma alteração ao invés de uma inserção
 
-	}
+	}*/
 
 	// request mapping para listar, informando a página desejada
-	@RequestMapping("listarAdmin/{pagina}")
+	/*@RequestMapping("listarAdmin/{pagina}")
 	public String listar(Model model, @PathVariable("pagina") int page) {
 
 		// criarr uma pageable ordenando com umero determinado por pagina, os objetos
@@ -88,39 +82,19 @@ public class luflixController {
 		model.addAttribute("totalPaginas", totalPages);
 		model.addAttribute("numPaginas", pageNumbers);
 		return "admin/listaAdmin";
-	}
+	}*/
 
-	@RequestMapping("excluirAdmin")
+	/*@RequestMapping("excluirAdmin")
 	public String excluirAdmin(Long id) {
 		admRep.deleteById(id);
 		return "redirect:listarAdmin/1";
-	}
+	}*/
 
-	@RequestMapping("alterarAdmin")
+	/*@RequestMapping("alterarAdmin")
 	public String alterarAdmin(Model mod, Long id) {
 
 		Adimistrador admin = admRep.findById(id).get();
 		mod.addAttribute("admin", admin);
 		return "forward:formAdmin";
-	}
-	@Publico
-	@RequestMapping("login")
-	public String login(Adimistrador admLogin, RedirectAttributes attr, HttpSession session) {
-		//buscar o adm no BD, através da senha  e  email
-		Adimistrador admin = admRep.findByEmailAndSenha(admLogin.getEmail(), admLogin.getSenha());
-		if (admin == null) {
-			attr.addFlashAttribute("mensagemErro", "Login e/ou senha invalio(s)");
-			return "redirect:/";
-		} else {
-			session.setAttribute("usuarioLogado", admin);
-			return "redirect:listarFilmes/1";
-		}
-	}
-	
-	@RequestMapping("logout")
-	public String logout(HttpSession session) {
-		//elimina do usuario da session
-		session.invalidate();
-		return "redirect:/";
-	}
+	}*/
 }

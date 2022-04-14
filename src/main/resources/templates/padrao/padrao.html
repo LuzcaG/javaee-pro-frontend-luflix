@@ -22,10 +22,12 @@
 		<nav style="background-color:black;">
 			<div class="nav-wrapper">
 				<a href="#" class="brand-logo right">-LUFLIX-</a>
-				<ul id="nav-mobile" class="left hide-on-med-and-down">
-					<li><a href="/formAdmin">Formulario Adm</a></li>
-					<li><a href="#">Clientes</a></li>
-					<li><a href="#">Filmes</a></li>
+				<ul id="nav-mobile" class="left hide-on-med-and-down" th:if="${session.usuarioLogado != null}">
+					<li><a href="/formAdmin">Cadastrar Adm</a></li>
+					<li><a href="/formGenero">Cadastrar genero</a></li>
+					<li><a href="/formFilmes">Cadastrar filme</a></li>
+					<li><a href="/logout">Log out</a></li>
+					
 				</ul>
 			</div>
 		</nav>

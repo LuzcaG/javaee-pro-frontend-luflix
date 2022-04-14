@@ -1,21 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"><!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <meta charset="utf-8">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<title>error 404</title>
+<title>Login de ADMIN</title>
 </head>
 <style>
-footer {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	height: 100px
-}
-.divErro{
-	padding-left: 400px;
-}
 body {
 	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
 		'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -145,20 +136,37 @@ height: 125px;
 }
 </style>
 <body>
-<header th:replace="padrao/padraoError404 :: cabecalho"></header>
-<div class="divErro">
-<h1>error 404</h1>
-<p>HTTP Status 404 – Não Encontrado</p>
-<p>Type Status Report</p>
+	
+		<header th:replace="padrao/padrao :: cabecalho"></header>
+		
+	
+	<input type="hidden" th:value="${adm?.id}" name="id">
 
-<p>Mensagem: O recurso solicitado [/helloWORDLDspring/] não está disponível</p>
 
-<p>Descrição: O servidor de origem não encontrou uma representação atual para o recurso de destino ou não deseja divulgar que existe.</p>
+	<div class="divPrincipal">
+		<div class="containerAdmin">
+			<form method="post" action="login" class="fromAdmin">
+				<h1>Login de Administrador</h1>
+				<table>
+					<tr>
+						<td>Email:</td>
+						<td><input type="email" name="email"
+							th:value="${admin?.email}" style="font-size: 30px" ></td>
+					</tr>
+					<tr>
+						<td>Senha:</td>
+						<td><input type="password" name="senha"
+							th:value="${admin?.senha}" style="font-size: 30px"></td>
+					</tr>
+					<tr>
+						<td><button type="submit">Cadastrar</button></td>
+					</tr>
+				</table>
+			</form>
+			<div class="erro" th:replace="error/fragments/mensagem"></div>
 
-<p>luflix.studio.br/2.0456wd</p>
-</div>
-
-<footer th:replace="padrao/padraoError404 :: rodape"></footer>
-
+		</div>
+		<footer th:replace="padrao/padrao :: rodape"></footer>
+	</div>
 </body>
 </html>

@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	
 <!-- Compiled and minified JavaScript -->
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -133,41 +135,53 @@ footer {
 	background: linear-gradient(98deg, rgb(0,0,0,0.6),rgb(0,0,0,0.2));
 	border-radius: 10px;
 }
+img{
+width: 100px;
+height: 125px;
+}
 </style>
 <body>
-	<!-- pontos para por  no body 
-			private Long id;
-			@NotEmpty
-			private String nome;
-			@NotEmpty
-			private String genero;
-			@NotEmpty
-			private String sinopse; 
-			@NotEmpty
-			private String palavraChave;
-			@NotEmpty
-			private String DataDeLancamento;
-			@NotEmpty
-			private String Diretor;
+	<!-- @Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	//@NotEmpty
+	private String nome;
+	@ManyToOne
+	private TipodeGenero genero;
+	//@NotEmpty
+	private String sinopse; 
+	
+	private String palavraChave;
+	//@NotEmpty
+	private String dataDeLancamento;
+	//@NotEmpty
+	private String diretor;
+	
+	@Column(columnDefinition = "TEXT")
+	private String fotos;
 				
 		
 		-->
 	<header th:replace="padrao/padrao :: cabecalho"></header>
 
 
-	<input type="hidden" th:value="${adm?.id}" name="id">
+	
 
 
 	<div class="divPrincipal">
 		<div class="containerFilmes">
+			
 			<form method="post" class="fromFilmes" action="salvarFilm" enctype="multipart/form-data" accept-charset="utf-8">
+						<input type="hidden" th:value="${film?.id}" name="id">
+						<input type="hidden" th:value="${film?.fotos}" name="fotos">
+			
 				<h1 class="tituloForm">CADASTRO DE FILMES</h1>
 				<table>
 					<tr>
 						<td>Nome:</td>
-						<td><input type="text" name="nome" style="font-size: 30px"></td>
+						<td><input type="text" name="nome" style="font-size: 30px" th:value="${film?.nome}"></td>
 						<td>Data de lançamento:</td>
-						<td class="tdata"><input type="date" name="dataDeLancamento"></td>
+						<td class="tdata"><input type="date" name="dataDeLancamento" th:value="${film?.dataDeLancamento}"></td>
 					</tr>
 					<tr>
 						<td>Genêro:</td>
@@ -180,7 +194,7 @@ footer {
 									th:value="${tg.id}"></option>
 						</select></td>
 						<td>Diretor:</td>
-						<td class="tdiretor"><input type="text" name="diretor"></td>
+						<td class="tdiretor"><input type="text" name="diretor" th:value="${film?.diretor}"></td>
 
 					</tr>
 
@@ -197,8 +211,22 @@ footer {
 										<input class="file-path validate" type="text">
 									</div>
 								</div>
+								
+								<div th:if="${film?.fotos?.length > 0}">
+								<h6>foto cadastradas</h6>
+								<div>
+									<ul>
+										<li th:each="fotos, i :${film?.verFotos()}">
+										<a th:href="${fotos}" target="_blanck"><img th:src="${fotos}"></a>
+										<a th:href="@{excluirFotoFilm(id=${film.id}, numFoto = ${i.index})}"><i class="material-icons">delete_forever</i></a>
+										
+										</li>
+										
+									</ul>
+								</div>
+							</div>
 							</form>
-
+							
 
 						</td>
 					</tr>
@@ -206,7 +234,7 @@ footer {
 				<label class="labSinopse">Sinopse:</label>
 				<div>
 					<textarea rows="1" cols="10" wrap="hard" class="sino"
-						name="sinopse"></textarea>
+						name="sinopse" th:text="${film?.sinopse}"></textarea>
 				</div>
 
 				<div class="tdbutton">

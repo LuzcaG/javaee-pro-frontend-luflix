@@ -32,4 +32,7 @@ public class TipodeFilmes {
 	@Column(columnDefinition = "TEXT")
 	private String fotos;
 	
+	public String[] verFotos() {
+		return this.fotos.split(";");
+	}
 }

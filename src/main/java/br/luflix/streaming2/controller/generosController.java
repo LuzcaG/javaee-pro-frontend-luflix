@@ -85,7 +85,7 @@ public class generosController {
 	}
 
 	@RequestMapping("excluirGen")
-	public String excluirAdmin(Long id) {
+	public String excluirGen(Long id) {
 		genRepository.deleteById(id);
 		return "redirect:listarGen/1";
 	}
