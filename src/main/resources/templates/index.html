@@ -28,14 +28,16 @@ body {
 }
 
 button {
-	background-color: rgba(137, 43, 226, 0);
+	background:transparent;
 	color: white;
 	border: none;
 	padding: 1em;
+	padding-left:100px;
 	border-radius: 10px;
 	cursor: pointer;
 	box-shadow: 1px 1px 6px black;
 	text-shadow: 1px 1px 6px black;
+	
 }
 
 button:hover {
@@ -49,7 +51,7 @@ button:hover {
 input {
 	padding: 2px;
 	border-radius: 5px;
-	border: 1px solid white;
+	border: 1px solid red;
 	background-color: transparent;
 	outline: none;
 	border-left: none;
@@ -57,6 +59,7 @@ input {
 	border-right: none;
 	color: white;
 	font-size: 5px;
+	
 }
 
 .final-step {
@@ -134,6 +137,12 @@ img{
 width: 100px;
 height: 125px;
 }
+.divPrincipal{
+	position: absolute;
+	left: 50%;
+	top: 45%;
+	transform: translate(-50%, -50%);
+}
 </style>
 <body>
 	
@@ -159,14 +168,15 @@ height: 125px;
 							th:value="${admin?.senha}" style="font-size: 30px"></td>
 					</tr>
 					<tr>
-						<td><button type="submit">Cadastrar</button></td>
+						<td><button type="submit">Entrar</button></td>
 					</tr>
 				</table>
 			</form>
 			<div class="erro" th:replace="error/fragments/mensagem"></div>
 
 		</div>
-		<footer th:replace="padrao/padrao :: rodape"></footer>
+		
 	</div>
+	<footer th:replace="padrao/padrao :: rodape"></footer>
 </body>
 </html>

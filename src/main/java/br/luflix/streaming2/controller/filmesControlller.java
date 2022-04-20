@@ -58,7 +58,7 @@ public class filmesControlller {
 			}
 			//faz o upload para a nuvem e obtem a url gerada
 			try {
-				fotos += firebase.uploadFile(arquivo)+":";
+				fotos += firebase.uploadFile(arquivo)+";";
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
@@ -126,5 +126,15 @@ public class filmesControlller {
 	}
 	public void alterarFoto() {
 		
+	}
+	@RequestMapping("buscarTipoFilmes")
+	public String buscarTipoFilmes(Model model, String genero) {
+	model.addAttribute("tipoFilmes", FilmesRepository.class);
+	return "";
+	}
+	@RequestMapping("buscarDiretorFilmes")
+	public String buscarDiretorFilmes(Model model, String diretor) {
+	model.addAttribute("diretorFilmes", FilmesRepository.class);
+	return "";
 	}
 }

@@ -15,32 +15,38 @@ public class AppInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		String uri = request.getRequestURI();
-		
+
 		System.out.println(uri);
-		
-		if(handler instanceof HandlerMethod) {
-			//liberação da tela inicial
+
+		if (handler instanceof HandlerMethod) {
+			// liberação da tela inicial
 			if (uri.equals("/")) {
 				return true;
 			}
 			if (uri.endsWith("/error")) {
 				return true;
 			}
-			//fazer o casting para HandlerMethod
+			// fazer o casting para HandlerMethod
 			HandlerMethod metodoChamado = (HandlerMethod) handler;
-			//se o metodo for publico ,libera
-			
-			if(metodoChamado.getMethodAnnotation(Publico.class) != null) {
+
+			if (uri.startsWith("/api")) {
+
 				return true;
+			} else {
+				// se o metodo for publico ,libera
+
+				if (metodoChamado.getMethodAnnotation(Publico.class) != null) {
+					return true;
+				}
+				// verificar se existe um usuario logado
+				if (request.getSession().getAttribute("usuarioLogado") != null) {
+					return true;
+				} else {
+					response.sendRedirect("/");
+					return false;
+				}
+
 			}
-			//verificar se existe um usuario logado 
-			if(request.getSession().getAttribute("usuarioLogado") != null) {
-				return true;
-			}else {
-				response.sendRedirect("/");
-				return false;
-			}
-			
 		}
 		return true;
 	}

@@ -51,7 +51,7 @@ public class FireBaseUtil {
 	// metodo para extensoa d arquivo
 	private String getExtensao(String nomeArq) {
 		// retorna o trecho da String que vai do ultimo ponto ate o fim
-		return nomeArq.substring(nomeArq.lastIndexOf(';'));
+		return nomeArq.substring(nomeArq.lastIndexOf('.'));
 	}
 
 	public String uploadFile(MultipartFile arq) throws IOException {
